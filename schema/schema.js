@@ -2,6 +2,9 @@ const graphql = require('graphql');
 
 const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList } = graphql;
 
+const Movie = require('../models/Movie');
+const Director = require('../models/Director');
+
 /*
 // All IDs set automatically by mLab
 // Don't forget to update after creation
@@ -50,6 +53,7 @@ const MovieType = new GraphQLObjectType({
       type: DirectorType,
       resolve(parent, args) {
         // return directors.find((director) => director.id == parent.directorId);
+        return Director.findById(parent.directorId);
       },
     },
   }),
@@ -65,6 +69,7 @@ const DirectorType = new GraphQLObjectType({
       type: new GraphQLList(MovieType),
       resolve(parent, args) {
         // return movies.filter((movie) => movie.directorId == parent.id)
+        return Movie.find({ directorId: parent.id });
       },
     },
   }),
@@ -78,6 +83,7 @@ const Query = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         // return movies.find((movie) => movie.id == args.id);
+        return Movie.findById(args.id);
       },
     },
     director: {
@@ -85,18 +91,21 @@ const Query = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         // return directors.find((director) => director.id == args.id);
+        return Director.findById(args.id);
       },
     },
     movies: {
       type: new GraphQLList(MovieType),
       resolve(parent, args) {
         // return movies;
+        return Movie.find({});
       },
     },
     directors: {
       type: new GraphQLList(DirectorType),
       resolve(parent, args) {
         // return directors;
+        return Director.find();
       },
     },
   },
