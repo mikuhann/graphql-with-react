@@ -29,7 +29,7 @@ const MovieType = new GraphQLObjectType({
     director: {
       type: DirectorType,
       resolve(parent, args) {
-        return directors.find((director) => director.id == parent.id);
+        return directors.find((director) => director.id == parent.directorId);
       },
     },
   }),
