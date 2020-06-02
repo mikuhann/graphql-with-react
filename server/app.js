@@ -10,6 +10,7 @@ const PORT = 3005;
 mongoose.connect('mongodb+srv://admin:admin@cluster0-uhdrz.mongodb.net/test?retryWrites=true&w=majority', {
   useUnifiedTopology: true,
   useNewUrlParser: true,
+  useFindAndModify: true,
   dbName: 'react-with-graphql'
 });
 
